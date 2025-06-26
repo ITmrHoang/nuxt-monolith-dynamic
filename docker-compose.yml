@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: himo-monolith-postgres
+    env_file:
+      - ./.env # Đường dẫn đến file env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-himo_dev}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-himo_dev-secret}
+      - POSTGRES_DB=${POSTGRES_DB:-monolith}
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    # Ánh xạ cổng để có thể kết nối từ bên ngoài (ví dụ: dùng DBeaver/pgAdmin)
+    ports:
+      - "5432:${POSTGRES_PORT:-5432}"
+    # Kết nối vào mạng chung
+    networks:
+      - app_network
+  
+    # PgAdmin4 for DBMS
+  pgAdmin:
+    image: dpage/pgadmin4
+    container_name: himo-monolith-pgAdmin
+    env_file:
+    - ./.env # Đường dẫn đến file env
+    # environment:
+    #   PGADMIN_DEFAULT_EMAIL: himo-minho@himodev.com
+    #   PGADMIN_DEFAULT_PASSWORD: himo_dev
+    ports:
+      - "8181:80"
+    depends_on:
+      - postgres
+    networks:
+      - app_network 
+  nuxt:
+    build: 
+      context: .
+      dockerfile: Nuxt.Dockerfile
+      args:
+        # Truyền UID và GID từ máy thật vào Dockerfile
+        #git base run để tạo user bên trong contaier có cùng UID vs GID với user máy thật
+        #echo "GID=$(id -g)" >> .env 
+        #echo "GID=$(id -u)" >> .env
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    container_name: himo-nuxt_monolith
+    
+    # Container sẽ chia sẻ network namespace với máy host.
+    # network_mode: "host"
+    # Service này sẽ được kết nối vào mạng tên là 'my_app_net'
+    # networks:
+    # my_app_net:
+    #   # Gán địa chỉ IP tĩnh cho service này
+    #   ipv4_address: 172.22.0.10
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app:delegated  
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - ./.env # Đường dẫn đến file env sẽ bị ghi đè bởi biến trong environment
+    stdin_open: true
+    tty: true
+    networks:
+      - app_network
+    depends_on:
+      - postgres
+# Định nghĩa mạng chung cho các service
+networks:
+  app_network:
+    driver: bridge
+# --- PHẦN CẤU HÌNH MẠNG ĐỂ CÓ THỂ GÁN IP TĨNH ---
+# Khai báo mạng tùy chỉnh mà chúng ta đã dùng ở trên
+# networks:
+#   my_app_net:
+#     driver: bridge
+#     ipam:
+#       driver: default
+#       config:
+#         # Định nghĩa một dải mạng (subnet). IP tĩnh bạn gán ở trên phải nằm trong dải này.
+#         - subnet: 172.22.0.0/16
+volumes:
+  postgres_data:

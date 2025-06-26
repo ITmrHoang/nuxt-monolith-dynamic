@@ -1,0 +1,22 @@
+# Bỏ qua các file và thư mục liên quan đến Git
+.git
+.gitignore
+
+# Bỏ qua các dependencies đã được cài đặt cục bộ (chúng ta sẽ cài trong Docker)
+# Đây là tối ưu quan trọng nhất!
+node_modules
+
+# Bỏ qua các file build và cache của Nuxt
+.output
+.nuxt
+
+# Bỏ qua hoàn toàn thư mục chứa dữ liệu của PostgreSQL
+postgres-data
+
+# Bỏ qua các file log và file môi trường
+npm-debug.log*
+.env
+
+# Bỏ qua các file của hệ điều hành
+.DS_Store
+Thumbs.db

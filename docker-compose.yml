@@ -26,7 +26,7 @@ services:
     env_file:
     - ./.env # Đường dẫn đến file env
     # environment:
-    #   PGADMIN_DEFAULT_EMAIL: himo-minho@himodev.com
+    #   PGADMIN_DEFAULT_EMAIL: himo-minho@example.com
     #   PGADMIN_DEFAULT_PASSWORD: himo_dev
     ports:
       - "8181:80"

@@ -20,6 +20,8 @@ USER ${UID}
 # Step 4: Copy file package.json và chạy npm install
 # Chỉ copy những file này để tận dụng cache. Nếu chúng không đổi, Docker sẽ không chạy lại npm install
 COPY --chown=${UID}:${GID} package*.json ./
+# Thêm dòng này để cài đặt riêng gói bị lỗi
+# RUN npm install @oxc-parser/binding-linux-x64-musl
 RUN npm install
 # Dùng UID và GID (thay vì tên) để gán quyền sở hữu. 
 # Đây là cách làm an toàn và chính xác nhất, không phụ thuộc vào tên user/group.

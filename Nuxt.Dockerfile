@@ -19,7 +19,7 @@ USER ${UID}
 
 # Step 4: Copy file package.json và chạy npm install
 # Chỉ copy những file này để tận dụng cache. Nếu chúng không đổi, Docker sẽ không chạy lại npm install
-COPY --chown=${UID}:${GID} package*.json ./
+COPY --link --chown=${UID}:${GID} package*.json ./
 # Thêm dòng này để cài đặt riêng gói bị lỗi
 # RUN npm install @oxc-parser/binding-linux-x64-musl
 RUN npm install
@@ -28,7 +28,7 @@ RUN npm install
 # Step 5: Copy toàn bộ source code còn lại
 # .dockerignore sẽ đảm bảo node_modules và các file khác không bị copy vào
 # --chown sẽ đảm bảo file được copy vào có quyền sở hữu đúng ngay lập tức
-COPY --chown=${UID}:${GID} . .
+COPY --link --chown=${UID}:${GID} . .
 
 
 EXPOSE 3000

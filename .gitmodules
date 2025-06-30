@@ -1,0 +1,3 @@
+[submodule "layers/himo-ui"]
+	path = layers/himo-ui
+	url = git@github.com:ITmrHoang/himo-ui.git

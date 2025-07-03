@@ -5,6 +5,8 @@
 # Bỏ qua các dependencies đã được cài đặt cục bộ (chúng ta sẽ cài trong Docker)
 # Đây là tối ưu quan trọng nhất!
 node_modules
+**/node_modules
+
 
 # Bỏ qua các file build và cache của Nuxt
 .output

@@ -33,40 +33,40 @@ services:
       - postgres
     networks:
       - app_network 
-  nuxt:
-    build: 
-      context: .
-      dockerfile: Nuxt.Dockerfile
-      args:
-        # Truyền UID và GID từ máy thật vào Dockerfile
-        #git base run để tạo user bên trong contaier có cùng UID vs GID với user máy thật
-        #echo "GID=$(id -g)" >> .env 
-        #echo "GID=$(id -u)" >> .env
-        UID: ${UID:-1000}
-        GID: ${GID:-1000}
-    container_name: himo-nuxt_monolith
+  # nuxt:
+  #   build: 
+  #     context: .
+  #     dockerfile: Nuxt.Dockerfile
+  #     args:
+  #       # Truyền UID và GID từ máy thật vào Dockerfile
+  #       #git base run để tạo user bên trong container có cùng UID vs GID với user máy thật
+  #       #echo "GID=$(id -g)" >> .env 
+  #       #echo "GID=$(id -u)" >> .env
+  #       UID: ${UID:-1000}
+  #       GID: ${GID:-1000}
+  #   container_name: himo-nuxt_monolith
     
-    # Container sẽ chia sẻ network namespace với máy host.
-    # network_mode: "host"
-    # Service này sẽ được kết nối vào mạng tên là 'my_app_net'
-    # networks:
-    # my_app_net:
-    #   # Gán địa chỉ IP tĩnh cho service này
-    #   ipv4_address: 172.22.0.10
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/app:delegated  
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    env_file:
-      - ./.env # Đường dẫn đến file env sẽ bị ghi đè bởi biến trong environment
-    stdin_open: true
-    tty: true
-    networks:
-      - app_network
-    depends_on:
-      - postgres
+  #   # Container sẽ chia sẻ network namespace với máy host.
+  #   # network_mode: "host"
+  #   # Service này sẽ được kết nối vào mạng tên là 'my_app_net'
+  #   # networks:
+  #   # my_app_net:
+  #   #   # Gán địa chỉ IP tĩnh cho service này
+  #   #   ipv4_address: 172.22.0.10
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - .:/app:delegated  
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true
+  #   env_file:
+  #     - ./.env # Đường dẫn đến file env sẽ bị ghi đè bởi biến trong environment
+  #   stdin_open: true
+  #   tty: true
+  #   networks:
+  #     - app_network
+    # depends_on:
+    #   - postgres
 # Định nghĩa mạng chung cho các service
 networks:
   app_network:

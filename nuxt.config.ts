@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
+  compatibilityDate: "2025-05-15",
   // // Thêm đối tượng 'vite' để cấu hình Vite
   vite: {
     server: {
@@ -13,9 +13,10 @@ export default defineNuxtConfig({
         // Tùy chọn: bạn có thể chỉ định chu kỳ kiểm tra (tính bằng milliseconds)
         // Điều này xác định tần suất Vite sẽ kiểm tra các thay đổi
         // Ví dụ: kiểm tra mỗi giây một lần
-        interval: 1000, 
-      }
-    }
+        interval: 1000,
+        ignored: ["**/node_modules/**"],
+      },
+    },
   },
   extends: [
     // ['layers/layer-ui', { install: true }]
@@ -26,24 +27,24 @@ export default defineNuxtConfig({
     // 'gitlab:username/repoName',        // GitLab Remote Source example
     // 'bitbucket:username/repoName',     // Bitbucket Remote Source example
     // ['github:ITmrHoang/himo-ui', { install: true }]
-    ['./layers/himo-ui']
+    ["./layers/himo-ui"],
   ],
   devtools: { enabled: true },
   devServer: {
-    host: process.env.NUXT_HOST || '0.0.0.0',
-    port: parseInt(process.env.NUXT_PORT as string || '3000') // Bạn có thể chỉ định port ở đây nếu muốn
+    host: process.env.NUXT_HOST || "0.0.0.0",
+    port: parseInt((process.env.NUXT_PORT as string) || "3000"), // Bạn có thể chỉ định port ở đây nếu muốn
   },
-   runtimeConfig: {
+  runtimeConfig: {
     // Các biến trong này chỉ có sẵn ở phía server (server-side)
     // Đây là nơi an toàn để đặt DATABASE_URL nuxt sẽ tự tìm biến mội trường NUXT_DATABASE_URL để điền vào khe cắm
     // use in nuxt outer event handler: const config = useRuntimeConfig(); config.databaseUrl
-    databaseUrl: '', // Giá trị mặc định là chuỗi rỗng
+    databaseUrl: "", // Giá trị mặc định là chuỗi rỗng
 
     // Các biến trong "public" sẽ có sẵn ở cả server và client (trình duyệt)
     public: {
       // Ví dụ: một biến công khai
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
-      siteName: process.env.NUXT_PUBLIC_SITE_NAME || 'Himo Nuxt App'
-    }
-  }
-})
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || "/api",
+      siteName: process.env.NUXT_PUBLIC_SITE_NAME || "Himo Nuxt App",
+    },
+  },
+});

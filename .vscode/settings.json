@@ -4,5 +4,8 @@
         "dpage",
         "PGADMIN",
         "USEPOLLING"
-    ]
+    ],
+    "editor.pasteAs.showPasteSelector": "never",
+    "editor.formatOnPaste": true,
+    "editor.pasteAs.enabled": false
 }

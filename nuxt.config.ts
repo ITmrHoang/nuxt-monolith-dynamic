@@ -18,6 +18,8 @@ export default defineNuxtConfig({
       },
     },
   },
+  // Thêm đối tượng các layers để sử dụng các layers trong Nuxt
+   
   extends: [
     // ['layers/layer-ui', { install: true }]
     // 'github:username/repoName',        // GitHub Remote Source
@@ -26,8 +28,15 @@ export default defineNuxtConfig({
     // 'github:username/repoName#v1.0.0', // GitHub Remote Source from v1.0.0 tag
     // 'gitlab:username/repoName',        // GitLab Remote Source example
     // 'bitbucket:username/repoName',     // Bitbucket Remote Source example
-    // ['github:ITmrHoang/himo-ui', { install: true }]
-    ["./layers/himo-ui"],
+    // ['github:ITmrHoang/himo-ui/src', { install: true }]
+    ["./layers/himo-ui/src"],
+  ],
+  css: [
+    // Người dùng phải tự thêm dòng này
+    './layers/himo-ui/assets/css/tailwind.css'
+  ],
+  modules: [
+    '@nuxtjs/tailwindcss'
   ],
   devtools: { enabled: true },
   devServer: {
